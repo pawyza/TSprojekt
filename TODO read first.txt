@@ -1,0 +1,23 @@
+Zrobione:
+Logowanie
+Konektor z baza danych
+Modele obiektow
+Baza danych
+
+
+Do zrobienia:
+Okno klienta
+	- powinno wyswietlac informacje o aktualnie zalogowanym kliencie
+	- powinno wyswietlac inforamcje o wszystkich samochodach wypozyczalni
+	- powinno zawierac mozliwosc rezerwacji
+	- powinno pokazywac informacje o aktualnych rezerwacjach zalgoowanego klienta
+
+*Okno administratora(po wpisaniu do logowania danych administratora)
+	- powinno zawierac liste samochodów
+	- powinno zawierac mozliwosc modyfikacji, usuniecia i dodania samochodu
+	- powinno zawieraæ liste rezerwacji
+	- powinno zawieraæ mo¿liwoœæ usuniêcia rezerwacji
+
+Okno rejestracji
+	-powinno dawac mozliwosc utworzenia nowego wpisu do bazy dla klienta
+

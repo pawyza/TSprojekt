@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 2019-04-16, 18:07:31
+    Document   : loginError
+    Created on : 2019-04-21, 16:56:20
     Author     : User
 --%>
 
@@ -9,10 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Starting page</title>
+        <title>Error</title>
     </head>
     <body>
-        <a href="login">Login</a> <br>
-        <a href="register">Register</a>
+        <h1>Zly email lub haslo</h1> <br>
+        <a href="login">Spróbuj ponownie</a>
     </body>
 </html>

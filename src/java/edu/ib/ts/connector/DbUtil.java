@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.ib.ts.connectors;
+package edu.ib.ts.connector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ public class DbUtil {
  
  private DbUtil() {
      ds = new BasicDataSource();
-     ds.setUrl("jdbc:mysql://localhost:3306/ProjektTS1?useSSL=false$severTimezone=UTC");
+     ds.setUrl("jdbc:mysql://localhost:3306/autorent?useSSL=false&serverTimezone=UTC");
      ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
      ds.setUsername("root");
      ds.setPassword("toor");

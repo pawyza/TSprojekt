@@ -16,20 +16,16 @@ public class Client {
     private String surname;
     private String pesel;
     private int phoneNumber;
-    private String login;
-    private String password;
 
     public Client() {
     }
 
-    public Client(int clientid, String forename, String surname, String pesel, int phoneNumber, String login, String password) {
+    public Client(int clientid, String forename, String surname, String pesel, int phoneNumber) {
         this.clientid = clientid;
         this.forename = forename;
         this.surname = surname;
         this.pesel = pesel;
         this.phoneNumber = phoneNumber;
-        this.login = login;
-        this.password = password;
     }
 
     public int getClientid() {
@@ -71,26 +67,9 @@ public class Client {
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    
     @Override
     public String toString() {
-        return "Client{" + "clientid=" + clientid + ", forename=" + forename + ", surname=" + surname + ", pesel=" + pesel + ", phoneNumber=" + phoneNumber + ", login=" + login + ", password=" + password + '}';
+        return "Client{" + "clientid=" + clientid + ", forename=" + forename + ", surname=" + surname + ", pesel=" + pesel + ", phoneNumber=" + phoneNumber + '}';
     }
-    
 }

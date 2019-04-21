@@ -3,11 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/controller/FirstServlet.java</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/controller/loginServlet.java</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/web/loginError.jsp</file>
             <file>file:/D:/PWR/projektTS/ProjektTS1/web/index.jsp</file>
-            <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/DAO/DbUtil.java</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/web/login.jsp</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/web/clientView.jsp</file>
             <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/model/Client.java</file>
-            <file>file:/D:/PWR/projektTS/ProjektTS1/web/result.jsp</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/web/showClients.jsp</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/connector/DbUtil.java</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/utilClass/InjectionStopper.java</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/src/java/edu/ib/ts/controller/clientsServlet.java</file>
+            <file>file:/D:/PWR/projektTS/ProjektTS1/web/register.jsp</file>
         </group>
     </open-files>
 </project-private>

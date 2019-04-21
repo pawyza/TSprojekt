@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 2019-04-16, 18:07:31
+    Document   : register
+    Created on : 2019-04-21, 16:30:25
     Author     : User
 --%>
 
@@ -9,10 +9,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Starting page</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        <a href="login">Login</a> <br>
-        <a href="register">Register</a>
+        <h1>Hello World!</h1>
     </body>
 </html>
