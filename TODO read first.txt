@@ -7,12 +7,14 @@ Okno rejestracji
 	-powinno dawac mozliwosc utworzenia nowego wpisu do bazy dla klienta
 
 
-Do zrobienia:
 Okno klienta
 	- powinno wyswietlac informacje o aktualnie zalogowanym kliencie
 	- powinno wyswietlac inforamcje o wszystkich samochodach wypozyczalni
+	- powinno pokazywac informacje o aktualnych rezerwacjach zalgowanego klienta
+
+Do zrobienia:
+Okno klienta
 	- powinno zawierac mozliwosc rezerwacji
-	- powinno pokazywac informacje o aktualnych rezerwacjach zalgoowanego klienta
 
 *Okno administratora(po wpisaniu do logowania danych administratora)
 	- powinno zawierac liste samochodów
