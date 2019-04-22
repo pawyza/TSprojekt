@@ -5,6 +5,8 @@
  */
 package edu.ib.ts.model;
 
+import java.util.Date;
+
 /**
  *
  * @author User
@@ -15,17 +17,19 @@ public class Car {
     private String registrationNumber;
     private String brand;
     private String model;
-    private double perDatCost;
+    private double perDayCost;
+    private Date dropOffDay;
 
     public Car() {
     }
 
-    public Car(int carId, String registrationNumber, String brand, String model, double perDatCost) {
+    public Car(int carId, String registrationNumber, String brand, String model, double perDayCost, Date dropOffDay) {
         this.carId = carId;
         this.registrationNumber = registrationNumber;
         this.brand = brand;
         this.model = model;
-        this.perDatCost = perDatCost;
+        this.perDayCost = perDayCost;
+        this.dropOffDay = dropOffDay;
     }
 
     public int getCarId() {
@@ -60,17 +64,25 @@ public class Car {
         this.model = model;
     }
 
-    public double getPerDatCost() {
-        return perDatCost;
+    public double getPerDayCost() {
+        return perDayCost;
     }
 
-    public void setPerDatCost(double perDatCost) {
-        this.perDatCost = perDatCost;
+    public void setPerDayCost(double perDatCost) {
+        this.perDayCost = perDatCost;
+    }
+
+    public Date getDropOffDay() {
+        return dropOffDay;
+    }
+
+    public void setDropOffDay(Date dropOffDay) {
+        this.dropOffDay = dropOffDay;
     }
 
     @Override
     public String toString() {
-        return "Car{" + "carId=" + carId + ", registrationNumber=" + registrationNumber + ", brand=" + brand + ", model=" + model + ", perDatCost=" + perDatCost + '}';
+        return "Car{" + "carId=" + carId + ", registrationNumber=" + registrationNumber + ", brand=" + brand + ", model=" + model + ", perDayCost=" + perDayCost + ", availability=" + dropOffDay + '}';
     }
     
 }

@@ -5,7 +5,8 @@
  */
 package edu.ib.ts.model;
 
-import java.time.LocalDate;
+import java.util.Date;
+
 
 /**
  *
@@ -14,17 +15,24 @@ import java.time.LocalDate;
 public class Reservation {
     private int reservationId;
     private int carId;
-    private int clientId;
-    private LocalDate pickUpDay;
-    private LocalDate dropOffDay;
+    private String registrationNumber;
+    private String brand;
+    private String model;
+    private double perDayCost;
+    private Date pickUpDay;
+    private Date dropOffDay;
     private double totalCost;
 
     public Reservation() {
     }
-    
-    public Reservation(int reservationId, int carId, int clientId, LocalDate pickUpDay, LocalDate dropOffDay, double totalCost) {
+
+    public Reservation(int reservationId, int carId, String registrationNumber, String brand, String model, double perDayCost, Date pickUpDay, Date dropOffDay, double totalCost) {
+        this.reservationId = reservationId;
         this.carId = carId;
-        this.clientId = clientId;
+        this.registrationNumber = registrationNumber;
+        this.brand = brand;
+        this.model = model;
+        this.perDayCost = perDayCost;
         this.pickUpDay = pickUpDay;
         this.dropOffDay = dropOffDay;
         this.totalCost = totalCost;
@@ -37,7 +45,7 @@ public class Reservation {
     public void setReservationId(int reservationId) {
         this.reservationId = reservationId;
     }
-    
+
     public int getCarId() {
         return carId;
     }
@@ -46,27 +54,51 @@ public class Reservation {
         this.carId = carId;
     }
 
-    public int getClientId() {
-        return clientId;
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
-    public LocalDate getPickUpDay() {
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public double getPerDayCost() {
+        return perDayCost;
+    }
+
+    public void setPerDayCost(double perDayCost) {
+        this.perDayCost = perDayCost;
+    }
+
+    public Date getPickUpDay() {
         return pickUpDay;
     }
 
-    public void setPickUpDay(LocalDate pickUpDay) {
+    public void setPickUpDay(Date pickUpDay) {
         this.pickUpDay = pickUpDay;
     }
 
-    public LocalDate getDropOffDay() {
+    public Date getDropOffDay() {
         return dropOffDay;
     }
 
-    public void setDropOffDay(LocalDate dropOffDay) {
+    public void setDropOffDay(Date dropOffDay) {
         this.dropOffDay = dropOffDay;
     }
 
@@ -80,7 +112,7 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" + "reservationId=" + reservationId + ", carId=" + carId + ", clientId=" + clientId + ", pickUpDay=" + pickUpDay + ", dropOffDay=" + dropOffDay + ", totalCost=" + totalCost + '}';
+        return "Reservation{" + "reservationId=" + reservationId + ", carId=" + carId + ", registrationNumber=" + registrationNumber + ", brand=" + brand + ", model=" + model + ", perDayCost=" + perDayCost + ", pickUpDay=" + pickUpDay + ", dropOffDay=" + dropOffDay + ", totalCost=" + totalCost + '}';
     }
-     
+    
 }
