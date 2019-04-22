@@ -5,7 +5,6 @@
  */
 package edu.ib.ts.controller;
 
-import edu.ib.ts.utilClass.InjectionStopper;
 import edu.ib.ts.connector.DbUtil;
 import edu.ib.ts.model.Client;
 import java.io.IOException;
@@ -26,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author User
  */
-@WebServlet("/login")
-public class loginServlet extends HttpServlet {
+@WebServlet("/showClients")
+public class ClientsServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -41,7 +40,20 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        String param = request.getParameter("get");
+        
+        if("show".equals(param)){
+            try{
+                List<Client> clients = getClient();
+                request.setAttribute("clients", clients);
+                request.getRequestDispatcher("showClients.jsp").forward(request, response);
+            } catch (ClassNotFoundException | SQLException ex) {
+                ex.printStackTrace();
+                response.sendError(500);
+            }
+        } else {
+            response.sendError(403);
+        }
     }
 
     /**
@@ -55,25 +67,6 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String login = new InjectionStopper().prepareString(request.getParameter("login"));
-        String password = new InjectionStopper().prepareString(request.getParameter("password"));
-        
-        if (!login.equals("") && !password.equals("")){
-            try{
-                Client client = getClient(login,password);
-                if(client != null){
-                    request.setAttribute("client", client);
-                    request.getRequestDispatcher("clientView.jsp").forward(request, response);
-                } else {
-                    request.getRequestDispatcher("loginError.jsp").forward(request, response);
-                }
-            } catch (ClassNotFoundException | SQLException ex) {
-                ex.printStackTrace();
-                response.sendError(500);
-            }
-        } else
-                request.getRequestDispatcher("loginError.jsp").forward(request, response);
     }
 
     /**
@@ -85,22 +78,23 @@ public class loginServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private Client getClient(String login, String password) throws SQLException, ClassNotFoundException {
-        Client client = null;
-        final String sqlQuery = "SELECT * FROM client where login = '" + login + "' and password = '" + password + "'";
+
+    private List<Client> getClient() throws SQLException, ClassNotFoundException {
+        List<Client> clients = null;
+        final String sqlQuery = "SELECT * FROM client";
         try (Connection connection = DbUtil.getInstance().getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(sqlQuery);){
+                clients = new ArrayList<>();
                     while (resultSet.next()) {
                             int clientid = resultSet.getInt("idclient");
                             String forename = resultSet.getString("forename");
                             String surname = resultSet.getString("surname");
                             String pesel = resultSet.getString("pesel");
                             int phoneNumber = resultSet.getInt("phoneNumber");
-                            client = new Client(clientid,forename,surname,pesel,phoneNumber);
+                            clients.add(new Client(clientid,forename,surname,pesel,phoneNumber));
                     }
-                    return client;
+                    return clients;
                 }
     }
 }

@@ -3,6 +3,8 @@ Logowanie
 Konektor z baza danych
 Modele obiektow
 Baza danych
+Okno rejestracji
+	-powinno dawac mozliwosc utworzenia nowego wpisu do bazy dla klienta
 
 
 Do zrobienia:
@@ -17,7 +19,4 @@ Okno klienta
 	- powinno zawierac mozliwosc modyfikacji, usuniecia i dodania samochodu
 	- powinno zawieraæ liste rezerwacji
 	- powinno zawieraæ mo¿liwoœæ usuniêcia rezerwacji
-
-Okno rejestracji
-	-powinno dawac mozliwosc utworzenia nowego wpisu do bazy dla klienta
 

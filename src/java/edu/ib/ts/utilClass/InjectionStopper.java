@@ -13,7 +13,7 @@ package edu.ib.ts.utilClass;
 public class InjectionStopper {
     
    public String prepareString(String string){
-       string.replace("'", "");
-       return string;
+       String replace = string.replace("'", "");
+       return replace;
    }
 }
