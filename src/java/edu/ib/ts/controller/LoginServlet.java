@@ -64,7 +64,10 @@ public class LoginServlet extends HttpServlet {
                 Client client = getClient(login,password);
                 if(client != null){
                     request.getSession().setAttribute("client", client);
-                    response.sendRedirect("clientView");
+                    if(client.getClientid() == 1)
+                        response.sendRedirect("adminView");
+                    else
+                        response.sendRedirect("clientView");
                 } else {
                     request.getRequestDispatcher("loginError.jsp").forward(request, response);
                 }

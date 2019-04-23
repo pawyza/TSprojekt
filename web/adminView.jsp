@@ -1,22 +1,20 @@
 <%-- 
-    Document   : clientView
-    Created on : 2019-04-21, 16:53:09
-    Author     : User
+    Document   : adminView
+    Created on : 2019-04-22, 19:30:56
+    Author     : Jakub Siembida
 --%>
 
 <%@taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Konto</title>
     </head>
     <body>
-        <c:out value="${'Zalogowany klient '}"/>
-        <c:out value="${client.getForename()}"/>
-        <c:out value="${' '}"/>
-        <c:out value="${client.getSurname()}"/>
+        <c:out value="${'Zalogowano jako administrator, witaj '}${client.getForename()}" />
         
         <h2>Lista samochodów:</h2>
         <table style="width:80%" border="1">
@@ -38,9 +36,22 @@
                    <td><c:out value="${car.getPerDayCost()}"/></td>
                    <td><c:out value="${car.getDropOffDay()}" default="${'Dostępny'}"/></td>
                </tr>
-           </c:forEach>
+            </c:forEach>
             
         </table>
+        <div></div>
+        <form action="carchange" method="POST">
+            <input type="radio" name="mode" value="add"> dodaj samochód<br>
+            <input type="radio" name="mode" value="edit"> edytuj samochód<br>
+            <input type="radio" name="mode" value="delete"> usuń samochód<br>
+            Id <input type="text" name="id" /><br>
+            Numer rejestracyjny <input type="text" name="regnmbr" /><br>
+            Marka <input type="text" name="brand" /><br>
+            Model <input type="text" name="model" /><br>
+            Koszt jednodniowy <input type="text" name="cost" /><br>
+            <button>wykonaj</button>
+        </form>
+        
         <br>
         <h2>Lista twoich rezerwacji:</h2>
         <table style="width:80%" border="1">
@@ -69,5 +80,11 @@
                </tr>
            </c:forEach>
         </table>
-    </body>
+        <div>usuń rezerwację</div>
+        <form action="reschange" method="POST">
+            Id <input type="text" name="id" /><br>
+            <button>wykonaj</button>
+        </form>
+        
+    </body>    
 </html>

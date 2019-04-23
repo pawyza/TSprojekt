@@ -5,13 +5,11 @@
  */
 package edu.ib.ts.controller;
 
-import edu.ib.ts.connector.DbUtil;
 import edu.ib.ts.model.Car;
 import edu.ib.ts.model.Client;
 import edu.ib.ts.model.Reservation;
-import edu.ib.ts.service.ClientService;
+import edu.ib.ts.service.AdminService;
 import edu.ib.ts.service.Service;
-import edu.ib.ts.utilClass.InjectionStopper;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,13 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author User
+ * @author Jakub Siembida
  */
-@WebServlet("/clientView")
-public class ClientViewServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/adminView"})
+public class AdminViewServlet extends HttpServlet {
 
     @Inject
     private Service service;
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -49,7 +48,7 @@ public class ClientViewServlet extends HttpServlet {
                 request.setAttribute("cars", cars);
                 List<Reservation> reservations = getReservation(client.getClientid());
                 request.setAttribute("reservations", reservations);
-                request.getRequestDispatcher("clientView.jsp").forward(request, response);
+                request.getRequestDispatcher("adminView.jsp").forward(request, response);
             } catch (ClassNotFoundException | SQLException ex) {
                 ex.printStackTrace();
                 response.sendError(500);
@@ -80,12 +79,15 @@ public class ClientViewServlet extends HttpServlet {
     }
 
     private List<Car> getCar() throws SQLException, ClassNotFoundException {
-        service = new ClientService();
+        service = new AdminService();
         return service.showCars();
     }
     
     private List<Reservation> getReservation(int clientId) throws SQLException, ClassNotFoundException {
-        service = new ClientService();
+        service = new AdminService();
         return service.showReservations(clientId);
     }
+
+    
+    
 }

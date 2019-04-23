@@ -22,7 +22,7 @@ public class DbUtil {
      ds.setUrl("jdbc:mysql://localhost:3306/autorent?useSSL=false&serverTimezone=UTC");
      ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
      ds.setUsername("root");
-     ds.setPassword("toor");
+     ds.setPassword("4176Kuba");
  }
  
  public static Connection getConnection() throws SQLException {
