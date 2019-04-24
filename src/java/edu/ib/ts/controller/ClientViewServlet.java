@@ -5,7 +5,7 @@
  */
 package edu.ib.ts.controller;
 
-import edu.ib.ts.connector.DbUtil;
+import com.sun.media.sound.InvalidFormatException;
 import edu.ib.ts.model.Car;
 import edu.ib.ts.model.Client;
 import edu.ib.ts.model.Reservation;
@@ -14,7 +14,12 @@ import edu.ib.ts.service.Service;
 import edu.ib.ts.utilClass.InjectionStopper;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +36,10 @@ public class ClientViewServlet extends HttpServlet {
 
     @Inject
     private Service service;
+    
+    private Client client;
+    private InjectionStopper is = new InjectionStopper();
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -42,7 +51,7 @@ public class ClientViewServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Client client = (Client) request.getSession().getAttribute("client");
+        client = (Client) request.getSession().getAttribute("client");
         
         try{
                 List<Car> cars = getCar();
@@ -67,6 +76,44 @@ public class ClientViewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        /*
+        Pattern datetime = Pattern.compile("20\\d{2}-[0-1]\\d-[0-3]\\d [0-2]\\d:[0-5]//d:[0-5]//d");
+        //powyższy regex zapewnia:
+        //lata 2000-2099, miesiące 0-19, dni 0-39, godziny 0-29, minuty 0-59, sekundy 0-59
+        //do poprawy: miesiące, dni, godziny
+        
+        Pattern[] invalidDatetimePatterns = {
+            Pattern.compile("-1[3-9]-"),//miesiące 13-19
+            Pattern.compile("-00-"),//miesiąc 00
+            Pattern.compile("-00 "),//dzień 00
+            Pattern.compile("-02-3[0-1]"),//30 i 31 luty
+            Pattern.compile("-04-31"),//31 kwie
+            Pattern.compile("-06-31"),//31 cze
+            Pattern.compile("-09-31"),//31 wrze
+            Pattern.compile("-11-31"),//31 list
+            Pattern.compile(" 2[4-9]"),//godziny od 24 wzwyż
+        };
+        */
+        
+        
+        String carId = is.prepareString(request.getParameter("id"));
+        String clientId = String.valueOf(client.getClientid());
+        String pickupday = "'" + is.prepareString(request.getParameter("pickupday")) + "'";
+        String dropoffday = "'" + is.prepareString(request.getParameter("dropoffday")) + "'";
+        try{
+            System.out.println(validateDatetimes(pickupday, dropoffday));
+            if(validateDatetimes(pickupday, dropoffday)){
+                String[] data = {carId, clientId, pickupday, dropoffday};
+                addReservation(data);
+            }
+        } catch (DateTimeParseException e) {
+            //tutaj obsłużyć złe formaty ldt
+            System.out.println("zła data");
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientViewServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.getSession().setAttribute("client", client);
+        request.getRequestDispatcher("clientView.jsp").forward(request, response);
     }
 
     /**
@@ -87,5 +134,20 @@ public class ClientViewServlet extends HttpServlet {
     private List<Reservation> getReservation(int clientId) throws SQLException, ClassNotFoundException {
         service = new ClientService();
         return service.showReservations(clientId);
+    }
+    
+    private void addReservation(String[] data) throws SQLException{
+        service = new ClientService();
+        ((ClientService) service).addReservation(data);
+    }
+    
+    private boolean validateDatetimes(String datetimeStr1, String datetimeStr2) throws DateTimeParseException{
+        System.out.println(datetimeStr1.replace(" ", "T").replace("'", ""));
+        System.out.println(datetimeStr2.replace(" ", "T").replace("'", ""));
+        LocalDateTime datetime1 = LocalDateTime.parse(datetimeStr1.replace(" ", "T").replace("'", ""));
+        LocalDateTime datetime2 = LocalDateTime.parse(datetimeStr2.replace(" ", "T").replace("'", ""));
+        LocalDateTime now = LocalDateTime.now();
+        //now < datetime1, now < datetime2, datetime1 < datetime2
+        return (now.compareTo(datetime1) < 0) && (now.compareTo(datetime2) < 0) && (datetime1.compareTo(datetime2) < 0);
     }
 }

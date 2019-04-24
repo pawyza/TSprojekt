@@ -69,5 +69,15 @@
                </tr>
            </c:forEach>
         </table>
+        
+        <div>dodawanie rezerwacji:</div>
+        
+        <form action="clientView" method="POST">
+            Id samochodu <input type="text" name="id" /><br>
+            Wynajęcie od <input type="text" name="pickupday" /><br>
+            Wynajęcie do <input type="text" name="dropoffday" /><br>
+            <button>zarezerwuj</button>
+        </form>
+        
     </body>
 </html>

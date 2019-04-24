@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +68,32 @@ public class ClientService implements Service{
                     }
                     return reservations;
                 }
+    }
+    
+    public void addReservation(String[] data) throws SQLException{
+        //dane: {carId, clientId, pickupday, dropoffday};
+        double perDayCost = getPerDayCarCost(data[0]);
+        LocalDate ld1 = LocalDate.parse(data[2].split(" ")[0].replace("'", ""));//tylko część z datami, cena wg dnia
+        LocalDate ld2 = LocalDate.parse(data[3].split(" ")[0].replace("'", ""));
+        int daysBetween = (int)DAYS.between(ld1, ld2);//rzutuje z longa na inta, dane nie są aż tak duże
+        final String sqlQuery = "INSERT INTO reservation(car, client, pickUpDay, dropOffDay, totalCost) VALUES(" + data[0] + ", " + data[1] + ", " + data[2] +", " + data[3] + ", " + daysBetween * perDayCost + ");";
+        
+        Connection connection = DbUtil.getInstance().getConnection();
+        Statement statement = connection.createStatement();
+        statement.executeUpdate(sqlQuery);
+        connection.close();
+    }
+
+    private double getPerDayCarCost(String string) throws SQLException{
+        final String sqlQuery = "SELECT perDayCost FROM car WHERE idcar = " + string + ";";
+        double output = 0.0;
+        try (Connection connection = DbUtil.getInstance().getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sqlQuery);){
+            resultSet.next();
+            output = resultSet.getInt("perDayCost");//tylko 1 wynik
+        }
+        return output;
     }
     
 }

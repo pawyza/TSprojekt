@@ -12,11 +12,11 @@ Okno klienta
 	- powinno wyswietlac inforamcje o wszystkich samochodach wypozyczalni
 	- powinno pokazywac informacje o aktualnych rezerwacjach zalgowanego klienta
 
-Do zrobienia:
+
 Okno klienta
 	- powinno zawierac mozliwosc rezerwacji
 
-*Okno administratora(po wpisaniu do logowania danych administratora)
+Okno administratora(po wpisaniu do logowania danych administratora)
 	- powinno zawierac liste samochodów
 	- powinno zawierac mozliwosc modyfikacji, usuniecia i dodania samochodu
 	- powinno zawieraæ liste rezerwacji
