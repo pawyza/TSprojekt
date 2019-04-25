@@ -76,26 +76,6 @@ public class ClientViewServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*
-        Pattern datetime = Pattern.compile("20\\d{2}-[0-1]\\d-[0-3]\\d [0-2]\\d:[0-5]//d:[0-5]//d");
-        //powyższy regex zapewnia:
-        //lata 2000-2099, miesiące 0-19, dni 0-39, godziny 0-29, minuty 0-59, sekundy 0-59
-        //do poprawy: miesiące, dni, godziny
-        
-        Pattern[] invalidDatetimePatterns = {
-            Pattern.compile("-1[3-9]-"),//miesiące 13-19
-            Pattern.compile("-00-"),//miesiąc 00
-            Pattern.compile("-00 "),//dzień 00
-            Pattern.compile("-02-3[0-1]"),//30 i 31 luty
-            Pattern.compile("-04-31"),//31 kwie
-            Pattern.compile("-06-31"),//31 cze
-            Pattern.compile("-09-31"),//31 wrze
-            Pattern.compile("-11-31"),//31 list
-            Pattern.compile(" 2[4-9]"),//godziny od 24 wzwyż
-        };
-        */
-        
-        
         String carId = is.prepareString(request.getParameter("id"));
         String clientId = String.valueOf(client.getClientid());
         String pickupday = "'" + is.prepareString(request.getParameter("pickupday")) + "'";
@@ -113,7 +93,7 @@ public class ClientViewServlet extends HttpServlet {
             Logger.getLogger(ClientViewServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         request.getSession().setAttribute("client", client);
-        request.getRequestDispatcher("clientView.jsp").forward(request, response);
+                response.sendRedirect("clientView");
     }
 
     /**

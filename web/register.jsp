@@ -19,8 +19,8 @@
             <div class="container">
                 <form action="register" method="POST">
                     Login: <input type="text" name="login" /> <br />
-                    Password: <input type="text" name="password" /> <br />
-                    Repeat password: <input type="text" name="repassword" /> <br />
+                    Password: <input type="password" name="password" /> <br />
+                    Repeat password: <input type="password" name="repassword" /> <br />
                     Forename: <input type="text" name="forename" /> <br />
                     Surname: <input type="text" name="surname" /> <br />
                     Pesel: <input type="text" name="pesel" /> <br />

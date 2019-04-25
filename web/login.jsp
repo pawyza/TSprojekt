@@ -19,7 +19,7 @@
             <div class="container">
                 <form action="login" method="POST">
                     Login: <input type="text" name="login" /> <br />
-                    Password: <input type="text" name="password" /> <br />
+                    Password: <input type="password" name="password" /> <br />
                     <section class = "center">
                         <input type="submit" value="Log in " class="loginButton"/>
                     </section>

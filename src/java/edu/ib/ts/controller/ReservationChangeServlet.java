@@ -40,5 +40,6 @@ public class ReservationChangeServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(ReservationChangeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resp.sendRedirect("adminView");
     }
 }

@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
@@ -72,16 +73,29 @@ public class ClientService implements Service{
     
     public void addReservation(String[] data) throws SQLException{
         //dane: {carId, clientId, pickupday, dropoffday};
+        final String sqlSelectQuerry = "SELECT max(dropOffDay) as dropOffDay from reservation where car='" + data[0] + "'";
+        String dateStr = null;
+        try (Connection connection = DbUtil.getInstance().getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sqlSelectQuerry);){
+                    dateStr = LocalDate.now().toString();
+                    while (resultSet.next()) {
+                        dateStr = resultSet.getDate("dropOffDay").toString();    
+                    }
+        } 
+        LocalDate currentRentDate = LocalDate.parse(dateStr.split(" ")[0].replace("'", ""));
         double perDayCost = getPerDayCarCost(data[0]);
         LocalDate ld1 = LocalDate.parse(data[2].split(" ")[0].replace("'", ""));//tylko część z datami, cena wg dnia
         LocalDate ld2 = LocalDate.parse(data[3].split(" ")[0].replace("'", ""));
         int daysBetween = (int)DAYS.between(ld1, ld2);//rzutuje z longa na inta, dane nie są aż tak duże
-        final String sqlQuery = "INSERT INTO reservation(car, client, pickUpDay, dropOffDay, totalCost) VALUES(" + data[0] + ", " + data[1] + ", " + data[2] +", " + data[3] + ", " + daysBetween * perDayCost + ");";
+        if(currentRentDate.isBefore(ld1)){
+            final String sqlQuery = "INSERT INTO reservation(car, client, pickUpDay, dropOffDay, totalCost) VALUES(" + data[0] + ", " + data[1] + ", " + data[2] +", " + data[3] + ", " + daysBetween * perDayCost + ");";
         
-        Connection connection = DbUtil.getInstance().getConnection();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(sqlQuery);
-        connection.close();
+            Connection connection = DbUtil.getInstance().getConnection();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sqlQuery);
+            connection.close();
+        }
     }
 
     private double getPerDayCarCost(String string) throws SQLException{

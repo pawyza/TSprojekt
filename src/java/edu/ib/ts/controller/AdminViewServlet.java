@@ -43,7 +43,11 @@ public class AdminViewServlet extends HttpServlet {
             throws ServletException, IOException {
         Client client = (Client) request.getSession().getAttribute("client");
         
-        try{
+        if(client.getClientid() != 1){
+            response.sendError(404);
+        }else{
+            
+            try{
                 List<Car> cars = getCar();
                 request.setAttribute("cars", cars);
                 List<Reservation> reservations = getReservation(client.getClientid());
@@ -53,8 +57,9 @@ public class AdminViewServlet extends HttpServlet {
                 ex.printStackTrace();
                 response.sendError(500);
             }
+        }    
     }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *

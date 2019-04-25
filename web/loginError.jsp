@@ -15,6 +15,8 @@
         <title>Error</title>
     </head>
     <body>
+        <div class="maluch">
+        </div>
         <section class="loginWindow">
             <div class="container">
                 <h1>Zly email lub haslo</h1> <br>
