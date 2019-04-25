@@ -14,6 +14,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -62,19 +64,31 @@ public class RegisterServlet extends HttpServlet {
         String number = new InjectionStopper().prepareString(request.getParameter("number"));
         
         
-        if (!login.equals("") && !password.equals("") && !forename.equals("") && !surname.equals("") && !pesel.equals("") && !number.equals("")
-                && password.equals(repassword) && !forename.matches("(.)*(\\d)") && !surname.matches("(.)*(\\d)") && !pesel.matches("(.)*(\\D)") && !number.matches("(.)*(\\D)")){  
-            try {
-                createClient(login, password, forename, surname, pesel, number);
-                request.getRequestDispatcher("registerSuccess.jsp").forward(request, response);
-            } catch (ClassNotFoundException | SQLException ex) {
+        try {
+            if (!login.equals("") && !password.equals("") && !forename.equals("") && !surname.equals("") && !pesel.equals("") && !number.equals("")
+                    && password.equals(repassword) && !forename.matches("(.)*(\\d)") && !surname.matches("(.)*(\\d)") && !pesel.matches("(.)*(\\D)") && !number.matches("(.)*(\\D)")){
+                if (checkPesel(pesel)){
+                        try {
+                            createClient(login, password, forename, surname, pesel, number);
+                            request.getRequestDispatcher("registerSuccess.jsp").forward(request, response);
+                        } catch (ClassNotFoundException | SQLException ex) {
+                            ex.printStackTrace();
+                            response.sendError(500);
+                        }
+                    } else {
+                    
+                        String message = "Pesel jest w użyciu!";
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("register.jsp").forward(request, response);
+                    }
+            } else {
+                        String message = "Podano zle wartosci!";
+                        request.setAttribute("message", message);
+                        request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
                 ex.printStackTrace();
                 response.sendError(500);
-            }
-        } else {
-            String message = "Podano zle wartosci!";
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
 
@@ -93,5 +107,23 @@ public class RegisterServlet extends HttpServlet {
         Connection connection = DbUtil.getInstance().getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate(sqlQuery);
+    }
+     
+      private boolean checkPesel(String pesel) throws SQLException, ClassNotFoundException {
+        Client client = null;
+        final String sqlQuery = "SELECT count(*) as count FROM client where pesel = '" + pesel + "'";
+        try (Connection connection = DbUtil.getInstance().getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sqlQuery);){
+                    while (resultSet.next()) {
+                            if(resultSet.getInt("count") > 0){
+                                return false;
+                            }
+                            if(resultSet.getInt("count") == 0){
+                                return true;
+                            }
+                    }
+                    return false;
+                }
     }
 }
